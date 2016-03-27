@@ -1,18 +1,27 @@
 package model;
 
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
+import org.springframework.stereotype.Component;
+
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * Created by Marco A. Fernández Heras on 9/03/16.
  */
 @Entity
 @Table(name = "user")
+@Component
+@Scope(value="session", proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class User {
     private int id;
     private String name;
     private String surname;
     private String dni;
     private String password;
+
+    private transient boolean valid = false;
 
     @Id
     @Column(name = "id", nullable = false)
@@ -89,5 +98,13 @@ public class User {
         result = 31 * result + (dni != null ? dni.hashCode() : 0);
         result = 31 * result + (password != null ? password.hashCode() : 0);
         return result;
+    }
+
+    public boolean isValid() {
+        return valid;
+    }
+
+    public void setValid(boolean valid) {
+        this.valid = valid;
     }
 }

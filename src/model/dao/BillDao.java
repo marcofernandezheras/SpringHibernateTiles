@@ -1,9 +1,12 @@
-package model;
+package model.dao;
 
+import model.Bill;
+import model.User;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 
 import java.io.Serializable;
 import java.util.List;
@@ -12,23 +15,24 @@ import java.util.Optional;
 /**
  * Created by Marco A. Fernández Heras on 15/03/16.
  */
+@Controller
 public class BillDao implements GenericDao<Bill> {
 
     @Autowired
     private SessionFactory sessionFactory;
-    private String dniUser = "";
+    @Autowired private User user;
 
     @Override @SuppressWarnings("unchecked")
     public List<Bill> all() {
         Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Bill.class);
-        criteria.add(Restrictions.eq("dni", dniUser));
+        criteria.add(Restrictions.eq("dni", user.getDni()));
         return criteria.list();
     }
 
     @Override @SuppressWarnings("unchecked")
     public Optional<Bill> search(Serializable id) {
         Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Bill.class);
-        criteria.add(Restrictions.eq("dni", dniUser));
+        criteria.add(Restrictions.eq("dni", user.getDni()));
         criteria.add(Restrictions.eq("id", id));
         return criteria.list().stream().findAny();
     }
@@ -57,7 +61,7 @@ public class BillDao implements GenericDao<Bill> {
         this.sessionFactory = sessionFactory;
     }
 
-    public void setDniUser(String dniUser) {
-        this.dniUser = dniUser;
+    public void setUser(User user) {
+        this.user = user;
     }
 }

@@ -1,0 +1,43 @@
+html {
+    position: relative;
+    min-height: 100%;
+}
+body {
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
+}
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    /* Set the fixed height of the footer here */
+    height: 60px;
+    background-color: #444343;
+}
+
+.container .text-muted {
+    margin: 20px 0;
+}
+
+.footer > .container {
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+code {
+    font-size: 80%;
+}
+.table-striped{
+    width: 100%;
+}
+.table-striped td{
+    padding: 10px;
+}
+.jumbotron img{
+    max-height: 70px;
+    margin: 0 auto;
+}
+
+.centered td{
+    vertical-align: middle !important;
+}

@@ -24,6 +24,18 @@
     <context:component-scan base-package="spring" />
     <context:component-scan base-package="model" />
 
+    <bean id="bookControlDao" class="control.BookControlDao">
+
+    </bean>
+
+    <bean id="userControlDao" class="control.UserControlDao">
+
+    </bean>
+
+    <bean id="billControlDao" class="control.BillControlDao">
+
+    </bean>
+
     <!-- Resolves views selected for rendering
         by @Controllers to .jsp resources in the /WEB-INF/views directory -->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">

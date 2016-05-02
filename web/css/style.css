@@ -41,3 +41,7 @@ code {
 .centered td{
     vertical-align: middle !important;
 }
+
+.clear{
+    clear: both;
+}

@@ -28,12 +28,15 @@
             <div class="collapse navbar-collapse" id="navbar-collapse">
                 <ul class="nav navbar-nav">
                     <li><a href="${pageContext.request.contextPath}/book/list.form">Ver Libros</a></li>
+                    <c:if test="${sessionScope.actualUser.valid}">
+                        <li><a href="${pageContext.request.contextPath}/bill/list.form">Mis facturas</a></li>
+                    </c:if>
                 </ul>
                 <c:choose>
-                    <c:when test="${not user.valid}">
+                    <c:when test="${not sessionScope.actualUser.valid}">
                         <form class="navbar-form navbar-right" method="post" action="${pageContext.request.contextPath}/user/login.form">
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Usuario" name="username">
+                                <input type="text" class="form-control" placeholder="Dni" name="dni">
                                 <input type="password" class="form-control" placeholder="Password" name="password">
                             </div>
                             <button type="submit" class="btn btn-default">Login</button>
@@ -47,6 +50,9 @@
                         </form>
                     </c:otherwise>
                 </c:choose>
+                <form class="navbar-form navbar-right" method="get" action="${pageContext.request.contextPath}/cart/view.form">
+                    <button type="submit" class="btn btn-default">Carrito <span class="badge">${sessionScope.cart.count()}</span></button>
+                </form>
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
     </nav>

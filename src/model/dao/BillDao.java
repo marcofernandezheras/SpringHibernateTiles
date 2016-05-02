@@ -7,6 +7,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
 import java.util.List;
@@ -23,6 +24,7 @@ public class BillDao implements GenericDao<Bill> {
     @Autowired private User user;
 
     @Override @SuppressWarnings("unchecked")
+    @Transactional
     public List<Bill> all() {
         Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Bill.class);
         criteria.add(Restrictions.eq("dni", user.getDni()));
@@ -30,6 +32,7 @@ public class BillDao implements GenericDao<Bill> {
     }
 
     @Override @SuppressWarnings("unchecked")
+    @Transactional
     public Optional<Bill> search(Serializable id) {
         Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Bill.class);
         criteria.add(Restrictions.eq("dni", user.getDni()));
@@ -38,17 +41,20 @@ public class BillDao implements GenericDao<Bill> {
     }
 
     @Override
+    @Transactional
     public void insert(Bill object) {
         object.getDetails().forEach(d -> d.setBill(object));
         sessionFactory.getCurrentSession().save(object);
     }
 
     @Override
+    @Transactional
     public void update(Bill object) {
         throw new UnsupportedOperationException();
     }
 
     @Override
+    @Transactional
     public void delete(Bill object) {
         throw new UnsupportedOperationException();
     }

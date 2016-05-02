@@ -12,9 +12,7 @@ import java.io.Serializable;
  */
 @Entity
 @Table(name = "user")
-@Component
-@Scope(value="session", proxyMode = ScopedProxyMode.TARGET_CLASS)
-public class User {
+public class User implements Serializable{
     private int id;
     private String name;
     private String surname;
@@ -100,6 +98,7 @@ public class User {
         return result;
     }
 
+    @Transient
     public boolean isValid() {
         return valid;
     }

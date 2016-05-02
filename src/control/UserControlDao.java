@@ -1,6 +1,6 @@
-package model.control;
+package control;
 
-import model.Book;
+import model.User;
 import model.dao.GenericDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,14 +14,12 @@ import java.util.Optional;
  * Created by Marco A. Fernández Heras on 27/03/16.
  */
 @Controller
-public class BookControlDao implements ControlDao<Book> {
-
+public class UserControlDao implements ControlDao<User>{
     @Autowired
-    private GenericDao<Book> dao;
+    private GenericDao<User> dao;
 
     @Override
-    @Transactional
-    public List<Book> all() throws ModelException {
+    public List<User> all() throws ModelException {
         try {
             return dao.all();
         }catch (Exception e){
@@ -30,8 +28,7 @@ public class BookControlDao implements ControlDao<Book> {
     }
 
     @Override
-    @Transactional
-    public Optional<Book> search(Serializable id) throws ModelException {
+    public Optional<User> search(Serializable id) throws ModelException {
         try {
             return dao.search(id);
         }catch (Exception e){
@@ -40,8 +37,7 @@ public class BookControlDao implements ControlDao<Book> {
     }
 
     @Override
-    @Transactional
-    public void insert(Book object) throws ModelException {
+    public void insert(User object) throws ModelException {
         try {
             dao.insert(object);
         }catch (Exception e){
@@ -50,8 +46,7 @@ public class BookControlDao implements ControlDao<Book> {
     }
 
     @Override
-    @Transactional
-    public void update(Book object) throws ModelException {
+    public void update(User object) throws ModelException {
         try {
             dao.update(object);
         }catch (Exception e){
@@ -60,7 +55,7 @@ public class BookControlDao implements ControlDao<Book> {
     }
 
     @Override
-    public void delete(Book object) throws ModelException {
+    public void delete(User object) throws ModelException {
         try {
             dao.delete(object);
         }catch (Exception e){
@@ -68,11 +63,11 @@ public class BookControlDao implements ControlDao<Book> {
         }
     }
 
-    public GenericDao<Book> getDao() {
+    public GenericDao<User> getDao() {
         return dao;
     }
 
-    public void setDao(GenericDao<Book> dao) {
+    public void setDao(GenericDao<User> dao) {
         this.dao = dao;
     }
 }

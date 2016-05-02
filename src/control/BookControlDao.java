@@ -1,7 +1,7 @@
-package model.control;
+package control;
 
-import model.Bill;
-import model.dao.BillDao;
+import model.Book;
+import model.dao.GenericDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,13 +14,13 @@ import java.util.Optional;
  * Created by Marco A. Fernández Heras on 27/03/16.
  */
 @Controller
-public class BillControlDao implements ControlDao<Bill> {
+public class BookControlDao implements ControlDao<Book> {
+
     @Autowired
-    private BillDao dao;
+    private GenericDao<Book> dao;
 
     @Override
-    @Transactional
-    public List<Bill> all() throws ModelException {
+    public List<Book> all() throws ModelException {
         try {
             return dao.all();
         }catch (Exception e){
@@ -29,8 +29,7 @@ public class BillControlDao implements ControlDao<Bill> {
     }
 
     @Override
-    @Transactional
-    public Optional<Bill> search(Serializable id) throws ModelException {
+    public Optional<Book> search(Serializable id) throws ModelException {
         try {
             return dao.search(id);
         }catch (Exception e){
@@ -39,8 +38,7 @@ public class BillControlDao implements ControlDao<Bill> {
     }
 
     @Override
-    @Transactional
-    public void insert(Bill object) throws ModelException {
+    public void insert(Book object) throws ModelException {
         try {
             dao.insert(object);
         }catch (Exception e){
@@ -49,8 +47,7 @@ public class BillControlDao implements ControlDao<Bill> {
     }
 
     @Override
-    @Transactional
-    public void update(Bill object) throws ModelException {
+    public void update(Book object) throws ModelException {
         try {
             dao.update(object);
         }catch (Exception e){
@@ -59,8 +56,7 @@ public class BillControlDao implements ControlDao<Bill> {
     }
 
     @Override
-    @Transactional
-    public void delete(Bill object) throws ModelException {
+    public void delete(Book object) throws ModelException {
         try {
             dao.delete(object);
         }catch (Exception e){
@@ -68,11 +64,11 @@ public class BillControlDao implements ControlDao<Bill> {
         }
     }
 
-    public BillDao getDao() {
+    public GenericDao<Book> getDao() {
         return dao;
     }
 
-    public void setDao(BillDao dao) {
+    public void setDao(GenericDao<Book> dao) {
         this.dao = dao;
     }
 }

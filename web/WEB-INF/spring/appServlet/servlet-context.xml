@@ -24,6 +24,9 @@
     <context:component-scan base-package="spring" />
     <context:component-scan base-package="model" />
 
+    <bean id="user" class="model.User" scope="session" />
+    <bean id="cart" class="model.Bill" scope="session" />
+
     <bean id="bookControlDao" class="control.BookControlDao">
 
     </bean>
@@ -32,8 +35,16 @@
 
     </bean>
 
-    <bean id="billControlDao" class="control.BillControlDao">
+    <bean id="billDao" class="model.dao.BillDao">
+        <property name="user" ref="user"/>
+    </bean>
 
+    <bean id="billControlDao" class="control.BillControlDao">
+        <property name="dao" ref="billDao" />
+    </bean>
+
+    <bean id="cartController" class="spring.CartController">
+        <property name="bill" ref="cart" />
     </bean>
 
     <!-- Resolves views selected for rendering

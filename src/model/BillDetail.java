@@ -75,7 +75,7 @@ public class BillDetail {
     public void setBill(Bill bill) {
         this.bill = bill;
     }
-
+/*
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -103,5 +103,9 @@ public class BillDetail {
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         result = 31 * result + amount;
         return result;
+    }
+*/
+    public double total(){
+        return amount * price;
     }
 }

@@ -3,6 +3,7 @@ package model;
 import javax.persistence.*;
 import java.sql.Date;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 /**
@@ -70,7 +71,7 @@ public class Bill {
         this.dni = dni;
     }
 
-    @OneToMany(mappedBy="bill", cascade = {CascadeType.ALL})
+    @OneToMany(mappedBy="bill", cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     public Set<BillDetail> getDetails() {
         return details;
     }
@@ -102,5 +103,15 @@ public class Bill {
         result = 31 * result + (surname != null ? surname.hashCode() : 0);
         result = 31 * result + (dni != null ? dni.hashCode() : 0);
         return result;
+    }
+
+    public double total(){
+        return details.stream().mapToDouble(BillDetail::total).sum();
+    }
+
+    public int count(){
+        if (details.isEmpty())
+            return 0;
+        return details.stream().mapToInt(BillDetail::getAmount).sum();
     }
 }

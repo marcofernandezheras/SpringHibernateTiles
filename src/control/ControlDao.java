@@ -1,4 +1,4 @@
-package model.control;
+package control;
 
 import java.io.Serializable;
 import java.util.List;

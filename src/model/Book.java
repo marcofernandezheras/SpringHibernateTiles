@@ -3,7 +3,7 @@ package model;
 import javax.persistence.*;
 
 /**
- * Created by Marco A. Fernández Heras on 9/03/16.
+ * Created by Marco A. Fernández Heras on 17/04/16.
  */
 @Entity
 @Table(name = "book")
@@ -14,14 +14,13 @@ public class Book {
     private String topic;
     private int pages;
     private double price;
-    private byte isNew;
-    private byte formatOne;
-    private byte formatTwo;
-    private byte formatThree;
+    private boolean isNew;
+    private boolean formatOne;
+    private boolean formatTwo;
+    private boolean formatThree;
 
     @Id
     @Column(name = "id", nullable = false)
-    @GeneratedValue(strategy=GenerationType.AUTO)
     public int getId() {
         return id;
     }
@@ -31,7 +30,7 @@ public class Book {
     }
 
     @Basic
-    @Column(name = "title", nullable = false, length = 150)
+    @Column(name = "title", nullable = false, length = 150, unique = true)
     public String getTitle() {
         return title;
     }
@@ -82,41 +81,41 @@ public class Book {
 
     @Basic
     @Column(name = "isNew", nullable = false)
-    public byte getIsNew() {
+    public boolean isIsNew() {
         return isNew;
     }
 
-    public void setIsNew(byte isNew) {
-        this.isNew = isNew;
+    public void setIsNew(boolean aNew) {
+        isNew = aNew;
     }
 
     @Basic
     @Column(name = "formatOne", nullable = false)
-    public byte getFormatOne() {
+    public boolean isFormatOne() {
         return formatOne;
     }
 
-    public void setFormatOne(byte formatOne) {
+    public void setFormatOne(boolean formatOne) {
         this.formatOne = formatOne;
     }
 
     @Basic
     @Column(name = "formatTwo", nullable = false)
-    public byte getFormatTwo() {
+    public boolean isFormatTwo() {
         return formatTwo;
     }
 
-    public void setFormatTwo(byte formatTwo) {
+    public void setFormatTwo(boolean formatTwo) {
         this.formatTwo = formatTwo;
     }
 
     @Basic
     @Column(name = "formatThree", nullable = false)
-    public byte getFormatThree() {
+    public boolean isFormatThree() {
         return formatThree;
     }
 
-    public void setFormatThree(byte formatThree) {
+    public void setFormatThree(boolean formatThree) {
         this.formatThree = formatThree;
     }
 
@@ -152,10 +151,10 @@ public class Book {
         result = 31 * result + pages;
         temp = Double.doubleToLongBits(price);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
-        result = 31 * result + (int) isNew;
-        result = 31 * result + (int) formatOne;
-        result = 31 * result + (int) formatTwo;
-        result = 31 * result + (int) formatThree;
+        result = 31 * result + (isNew ? 1 : 0);
+        result = 31 * result + (formatOne ? 1 : 0);
+        result = 31 * result + (formatTwo ? 1 : 0);
+        result = 31 * result + (formatThree ? 1 : 0);
         return result;
     }
 }

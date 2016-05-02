@@ -1,4 +1,4 @@
-package model.control;
+package control;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;

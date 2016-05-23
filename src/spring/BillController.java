@@ -50,7 +50,7 @@ public class BillController {
                 model.addObject("bill", billOptional.get());
             }
             else{
-                model.addObject("error", "Factura no encontrado");
+                model.addObject("error", "Factura no encontrada");
             }
         } catch (ModelException ex) {
             ex.printStackTrace();

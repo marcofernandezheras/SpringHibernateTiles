@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <tiles:insertDefinition name="defaultTemplate">
 
     <tiles:putAttribute name="title">Librería Spring - Tiles</tiles:putAttribute>
@@ -20,8 +21,9 @@
                     <c:forEach var="book" items="${books}">
                         <tr>
                             <td>${book.title}</td>
+                            <td><fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${book.price}" /></td>
                             <td class="pull-right">
-                                <form action="${pageContext.request.contextPath}/cart/add.form" method="post">
+                                <form action="${pageContext.request.contextPath}/cart/add.form" method="post" name="cartAjaxForm">
                                     <input type="hidden" name="id" value="${book.id}" >
                                     <button type="submit" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-shopping-cart"></span></button>
                                 </form>
@@ -49,4 +51,7 @@
         </div>
     </tiles:putAttribute>
 
+    <tiles:putAttribute name="extraScripts">
+        <script src="${pageContext.request.contextPath}/js/cartController.js"></script>
+    </tiles:putAttribute>
 </tiles:insertDefinition>

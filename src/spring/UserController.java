@@ -2,6 +2,7 @@ package spring;
 
 import control.ControlDao;
 import control.ModelException;
+import model.Bill;
 import model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,6 +27,9 @@ public class UserController {
 
     @Autowired
     private User user;
+
+    @Autowired
+    Bill bill;
 
     @RequestMapping(value = {"/", "/register"} , method = RequestMethod.GET)
     public ModelAndView registerView(){
@@ -73,6 +77,8 @@ public class UserController {
     public String logout(HttpServletRequest request){
         request.getSession().invalidate();
         this.user.setValid(false);
+        bill.setId(0);
+        bill.getDetails().clear();
         return "index";
     }
 

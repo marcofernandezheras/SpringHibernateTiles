@@ -75,36 +75,7 @@ public class BillDetail {
     public void setBill(Bill bill) {
         this.bill = bill;
     }
-/*
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
 
-        BillDetail that = (BillDetail) o;
-
-        if (id != that.id) return false;
-        if (lineOrder != that.lineOrder) return false;
-        if (Double.compare(that.price, price) != 0) return false;
-        if (amount != that.amount) return false;
-        if (title != null ? !title.equals(that.title) : that.title != null) return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result;
-        long temp;
-        result = id;
-        result = 31 * result + lineOrder;
-        result = 31 * result + (title != null ? title.hashCode() : 0);
-        temp = Double.doubleToLongBits(price);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        result = 31 * result + amount;
-        return result;
-    }
-*/
     public double total(){
         return amount * price;
     }

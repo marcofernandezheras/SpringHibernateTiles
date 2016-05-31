@@ -51,7 +51,7 @@
                     </c:otherwise>
                 </c:choose>
                 <form class="navbar-form navbar-right" method="get" action="${pageContext.request.contextPath}/cart/view.form">
-                    <button type="submit" class="btn btn-default">Carrito <span class="badge">${sessionScope.cart.count()}</span></button>
+                    <button type="submit" class="btn btn-default" >Carrito <span class="badge" id="cartCountBadge" data-container="body" data-toggle="popover" data-placement="bottom" data-content="Carrito actualizado">${sessionScope.cart.count()}</span></button>
                 </form>
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
@@ -71,6 +71,6 @@
             integrity="sha256-lZFHibXzMHo3GGeehn1hudTAP3Sc0uKXBXAzHX1sjtk="
             crossorigin="anonymous"></script>
     <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
-
+    <tiles:insertAttribute name="extraScripts" ignore="true" defaultValue=""/>
     </body>
 </html>

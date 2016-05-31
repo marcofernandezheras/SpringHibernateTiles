@@ -2,16 +2,11 @@ package spring;
 
 import control.ControlDao;
 import control.ModelException;
-import model.Bill;
-import model.BillDetail;
-import model.Book;
-import model.User;
+import model.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
@@ -36,10 +31,14 @@ public class CartController {
         return "cart/view";
     }
 
-    @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public String add(@RequestParam int id){
+
+    @ResponseBody
+    @RequestMapping(value = "/add", method = RequestMethod.POST,
+            produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public AjaxCartResponse add(@RequestBody Book bookToAdd){
+        AjaxCartResponse response = new AjaxCartResponse();
         try {
-            Optional<Book> bookOptional = dao.search(id);
+            Optional<Book> bookOptional = dao.search(bookToAdd.getId());
             if(bookOptional.isPresent()){
                 Book book = bookOptional.get();
                 Optional<BillDetail> detail = bill.getDetails().stream()
@@ -47,6 +46,7 @@ public class CartController {
                         .findFirst();
                 if(detail.isPresent()){
                     detail.get().setAmount(detail.get().getAmount() + 1);
+                    response.setLineAmount(detail.get().getAmount());
                 }
                 else{
                     BillDetail billDetail = new BillDetail();
@@ -55,23 +55,34 @@ public class CartController {
                     billDetail.setPrice(book.getPrice());
                     bill.getDetails().add(billDetail);
                 }
+                response.setCode(AjaxCartResponse.OK_CODE);
+                response.setCartAmount(bill.count());
+                response.setTotal(bill.total());
             }
         } catch (ModelException e) {
             e.printStackTrace();
         }
-        return "cart/view";
+        return response;
     }
 
-    @RequestMapping(value = "/remove", method = RequestMethod.POST)
-    public String remove(@RequestParam String title) {
+    @ResponseBody
+    @RequestMapping(value = "/remove", method = RequestMethod.POST,
+            produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public AjaxCartResponse remove(@RequestBody Book bookToRemove) {
+        AjaxCartResponse response = new AjaxCartResponse();
         Optional<BillDetail> detail = bill.getDetails().stream()
-                .filter(d -> d.getTitle().equalsIgnoreCase(title))
+                .filter(d -> d.getTitle().equalsIgnoreCase(bookToRemove.getTitle()))
                 .findFirst();
         if (detail.isPresent()) {
             detail.get().setAmount(detail.get().getAmount() - 1);
+            response.setLineAmount(detail.get().getAmount());
+            response.setSubtotal(detail.get().total());
             bill.getDetails().removeIf(c -> c.getAmount() == 0);
         }
-        return "cart/view";
+        response.setCode(AjaxCartResponse.OK_CODE);
+        response.setCartAmount(bill.count());
+        response.setTotal(bill.total());
+        return response;
     }
     @RequestMapping(value = "/buy", method = RequestMethod.POST)
     public String buy(HttpServletRequest request){

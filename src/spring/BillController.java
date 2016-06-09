@@ -5,6 +5,7 @@ import control.ModelException;
 import model.Bill;
 import model.Book;
 import model.User;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +23,8 @@ import java.util.Optional;
 @RequestMapping("/bill")
 public class BillController {
 
+    private static final Logger logger = Logger.getLogger(BillController.class);
+
     @Autowired
     private ControlDao<Bill> dao;
 
@@ -35,7 +38,7 @@ public class BillController {
             List<Bill> bills = dao.query(bill -> bill.getDni().equalsIgnoreCase(user.getDni()));
             model.addObject("bills", bills);
         } catch (ModelException ex) {
-            ex.printStackTrace();
+            logger.error(ex.getMessage(), ex);
             model.addObject("error", ex);
         }
         return model;
@@ -53,7 +56,7 @@ public class BillController {
                 model.addObject("error", "Factura no encontrada");
             }
         } catch (ModelException ex) {
-            ex.printStackTrace();
+            logger.error(ex.getMessage(), ex);
             model.addObject("error", ex);
         }
         return model;
